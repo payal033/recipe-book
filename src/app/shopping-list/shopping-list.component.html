@@ -1,1 +1,14 @@
-<p>shopping-list works!</p>
+<div class="row">
+  <div class="container">
+    <app-shopping-edit></app-shopping-edit>
+    <hr />
+    <ul class="shopping-list">
+      @for(ing of ingredients; track ing.ingId; let idx = $index) {
+      <a class="shopping-item" (click)="onEditItem(idx)">
+        <span>{{ ing.ingredientName }}</span>
+        <span>{{ ing.quantity }}</span>
+      </a>
+      }
+    </ul>
+  </div>
+</div>
