@@ -1,11 +1,12 @@
 <div class="container">
   <h3>Find new recipes!</h3>
+  <!-- find new recipes form -->
   <div class="flex">
     <form
-      (ngSubmit)="onSearch(discoverForm)"
+      (ngSubmit)="onSearch(searchForm)"
       id="submit"
       class="flex"
-      #discoverForm="ngForm"
+      #searchForm="ngForm"
     >
       <input
         type="text"
@@ -24,6 +25,27 @@
     </button>
   </div>
   <div id="result-heading"></div>
-  <div id="meals" class="meals"></div>
-  <div id="single-meal"></div>
+
+  <!-- show list of found recipes -->
+  @if(flagSearch) {
+  <div id="meals" class="meals">
+    @for(recipe of searchedRecipes; track recipe.idMeal; let i=$index) {
+    <div
+      class="meal"
+      [attr.data-index]="recipe.idMeal"
+      (click)="getMealById(recipe.idMeal)"
+    >
+      <img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" />
+      <div class="meal-info">
+        <h5>{{ recipe.strMeal }}</h5>
+      </div>
+    </div>
+    }
+  </div>
+
+  } @if(randomRecipe !== null && flagSearch === false) {
+  <app-discover-recipe [recipe]="randomRecipe"></app-discover-recipe>
+  } @if(recipeById !== null && flagSearch == true) {
+  <app-discover-recipe [recipe]="recipeById"></app-discover-recipe>
+  }
 </div>

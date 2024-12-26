@@ -1,0 +1,20 @@
+<div id="single-meal" class="single-meal">
+  <h4>{{ recipe.mealName }}</h4>
+  <img [src]="recipe.mealImage" alt="{{ recipe.mealName }}" />
+  <div class="single-meal-info">
+    <p>{{ recipe.category ? recipe.category : "" }}</p>
+  </div>
+  <div class="main">
+    <p>{{ recipe.instructions }}</p>
+    @if(recipe.ingredients.length !== 0) {
+    <h5>Ingredients</h5>
+    }
+    <ul>
+      @for(ingredient of recipe.ingredients; track ingredient; ) {
+      <li>
+        {{ ingredient }}
+      </li>
+      }
+    </ul>
+  </div>
+</div>
