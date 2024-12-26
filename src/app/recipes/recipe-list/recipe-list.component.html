@@ -1,1 +1,13 @@
-<p>recipe-list works!</p>
+<div class="row">
+  <div class="col-xs-12">
+    <button class="button addRecipe" (click)="onNewRecipe()">New Recipe</button>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-xs-12">
+    @for(recipe of recipes; track recipe.name; let idx = $index) {
+    <app-recipe-item [recipeData]="recipe" [index]="idx"></app-recipe-item>
+    }
+  </div>
+</div>

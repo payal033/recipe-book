@@ -9,12 +9,14 @@
 
 .addRecipe {
   border: 1px solid #a70082;
-  color: #a70082;
+  background: #a70082;
+  color: #fff;
   margin-bottom: 0px;
   margin-top: 15px;
 }
 
-.addRecipe:hover {
-  background: #a70082;
+.disabled {
+  background: #a36496;
   color: #fff;
+  cursor: not-allowed;
 }

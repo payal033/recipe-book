@@ -1,1 +1,15 @@
-<p>recipe-item works!</p>
+<a [routerLink]="[index]" routerLinkActive="active" class="recipe">
+  <div class="details">
+    <p class="recipeType">{{ recipeData.recipeType }}</p>
+    <h5>{{ recipeData.name }}</h5>
+    <div class="info">
+      <p><fa-icon [icon]="faStopwatch"></fa-icon> {{ recipeData.cookTime }}</p>
+      <p>
+        <fa-icon [icon]="faPeopleGroup"></fa-icon> {{ recipeData.servings }}
+      </p>
+    </div>
+  </div>
+  <div class="recipe-image">
+    <img [src]="recipeData.imageURL" [alt]="recipeData.name" />
+  </div>
+</a>

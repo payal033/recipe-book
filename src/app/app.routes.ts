@@ -15,7 +15,8 @@ export const routes: Routes = [
   },
   {
     path: 'recipes',
-    component: RecipesComponent,
+    loadChildren: () =>
+      import('../app/recipes/recipes.routes').then((m) => m.recipeRoutes),
   },
   {
     path: 'shopping-list',

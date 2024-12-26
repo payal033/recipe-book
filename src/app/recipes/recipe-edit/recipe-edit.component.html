@@ -1,1 +1,145 @@
-<p>recipe-edit works!</p>
+<div class="container">
+  <div class="col-xs-12">
+    <form [formGroup]="recipeForm" (ngSubmit)="onSubmit()">
+      <div class="button-group">
+        <button
+          type="submit"
+          class="button save"
+          [disabled]="!recipeForm.valid"
+        >
+          Save
+        </button>
+        <button type="submit" class="button cancel" (click)="onCancel()">
+          Cancel
+        </button>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="name">Recipe Name</label>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+          />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="time">Cook Time</label>
+            <input
+              type="text"
+              class="form-control"
+              id="time"
+              formControlName="cookTime"
+            />
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="type">Recipe Type</label>
+            <select id="type" class="form-select" formControlName="recipeType">
+              <option disabled value="">Choose</option>
+              @for(type of recipeTypes; track type) {
+              <option [value]="type">
+                {{ type }}
+              </option>
+              }
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="servings">Servings</label>
+            <input
+              type="text"
+              class="form-control"
+              id="servings"
+              formControlName="servings"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="imagePath">Image URL</label>
+            <input
+              type="text"
+              id="imagePath"
+              class="form-control"
+              formControlName="imageURL"
+              #imageURL
+            />
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <img
+          [src]="imageURL.value"
+          [class]="imageURL.value ? 'uploadImg' : ''"
+        />
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea
+              id="description"
+              class="form-control"
+              rows="12"
+              formControlName="description"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12" formArrayName="ingredients">
+          <label class="my-2">Ingredients</label>
+          @for(ingredientCtrl of controls; track ingredientCtrl; let i = $index)
+          {
+          <div class="row" [formGroupName]="i">
+            <div class="col-md-8">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="ingredientName"
+              />
+            </div>
+            <div class="col-md-2">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="quantity"
+              />
+            </div>
+            <div class="col-md-2">
+              <button
+                type="button"
+                class="button deleteIng"
+                (click)="onDeleteIngredient(i)"
+              >
+                <fa-icon [icon]="faXmark"></fa-icon>
+              </button>
+            </div>
+          </div>
+          }
+
+          <hr />
+          <div class="row">
+            <div class="col-xs-12">
+              <button
+                type="button"
+                class="button addNew"
+                (click)="onAddIngredient()"
+              >
+                Add Ingredient
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -29,24 +29,22 @@ textarea.ng-invalid.ng-touched {
 
 .save {
   border: 1px solid #008104;
-  color: #008104;
-  margin-bottom: 0px;
-}
-
-.save:hover {
   background-color: #008104;
   color: #fff;
+  margin-bottom: 0px;
 }
 
 .cancel {
   border: 1px solid #f44336;
-  color: #f44336;
+  background-color: #f44336;
+  color: #fff;
   margin-bottom: 0px;
 }
 
-.cancel:hover {
-  background-color: #f44336;
+.disabled {
+  background: #567a57;
   color: #fff;
+  cursor: not-allowed;
 }
 
 .form-group {
@@ -68,6 +66,12 @@ textarea {
   background-color: #f7f7f7;
 }
 
+input:focus,
+select:focus,
+textarea:focus {
+  background-color: #f3f3f3;
+}
+
 label {
   font-size: 16px;
   margin-bottom: 5px;
@@ -76,11 +80,7 @@ label {
 
 .addNew {
   border: 1px solid #a70082;
-  color: #a70082;
   margin-bottom: 0px;
-}
-
-.addNew:hover {
   background: #a70082;
   color: #fff;
 }
