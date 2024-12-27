@@ -13,6 +13,28 @@
   padding: 0px;
 }
 
+.shopping-checklist {
+  color: black;
+  border-radius: 4px;
+  display: flex;
+  justify-content: flex-start;
+  align-content: center;
+  width: 100%;
+  gap: 10px;
+  position: relative;
+}
+
+.delete-icon {
+  margin: 0;
+  padding: 0;
+  color: red;
+  height: 0;
+  width: 0;
+  font-size: 24px;
+  cursor: pointer;
+  border: none;
+}
+
 .shopping-item {
   background-color: #fff;
   text-decoration: none;
@@ -22,6 +44,7 @@
   border-radius: 4px;
   display: flex;
   justify-content: space-between;
+  width: 100%;
 }
 
 span {

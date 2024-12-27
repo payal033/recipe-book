@@ -4,10 +4,15 @@
     <hr />
     <ul class="shopping-list">
       @for(ing of ingredients; track ing.ingId; let idx = $index) {
-      <a class="shopping-item" (click)="onEditItem(idx)">
-        <span>{{ ing.ingredientName }}</span>
-        <span>{{ ing.quantity }}</span>
-      </a>
+      <div class="shopping-checklist">
+        <a class="shopping-item" (click)="onEditItem(idx)">
+          <span>{{ ing.ingredientName }}</span>
+          <span>{{ ing.quantity }}</span>
+        </a>
+        <button class="delete-icon" (click)="onDelete(idx)">
+          <fa-icon [icon]="faXmark"></fa-icon>
+        </button>
+      </div>
       }
     </ul>
   </div>
