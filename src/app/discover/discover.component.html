@@ -1,5 +1,11 @@
 <div class="container">
-  <h3>Find new recipes!</h3>
+  <div class="section-header">
+    <h3>You don't know what to cook today? Try a suprise recipe</h3>
+    <button id="random" class="random-btn" (click)="findRandom()">
+      Surprise recipe
+    </button>
+  </div>
+
   <!-- find new recipes form -->
   <div class="flex">
     <form
@@ -20,32 +26,73 @@
         <fa-icon [icon]="faMagnifyingGlass"></fa-icon>
       </button>
     </form>
-    <button id="random" class="random-btn" (click)="findRandom()">
-      <fa-icon [icon]="faShuffle"></fa-icon>
-    </button>
   </div>
-  <div id="result-heading"></div>
 
-  <!-- show list of found recipes -->
-  @if(flagSearch) {
-  <div id="meals" class="meals">
-    @for(recipe of searchedRecipes; track recipe.idMeal; let i=$index) {
-    <div
-      class="meal"
-      [attr.data-index]="recipe.idMeal"
-      (click)="getMealById(recipe.idMeal)"
-    >
-      <img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" />
-      <div class="meal-info">
-        <h5>{{ recipe.strMeal }}</h5>
+  <div id="result-heading">
+    {{ searchTerm ? searchTerm + " Recipes" : "" }}
+  </div>
+
+  <div class="sidebar">
+    <h3>Categories</h3>
+    <!-- show categories -->
+
+    <div class="btn-group btn-group-vertical categories" role="group">
+      @for(category of categories; track category;) {
+      <div class="btn-group" role="group">
+        <button
+          type="button"
+          class="btn btn-default category"
+          [class.selected]="category === categorySelected"
+          (click)="onCategorySelected(category)"
+        >
+          {{ category }}
+        </button>
       </div>
+      }
+    </div>
+  </div>
+
+  <div class="right">
+    <!-- show list of found recipes -->
+    @if(flagSearch) {
+    <div id="meals" class="meals">
+      @for(recipe of searchedRecipes; track recipe.idMeal; let i=$index) {
+      <div
+        class="meal"
+        [attr.data-index]="recipe.idMeal"
+        (click)="getMealById(recipe.idMeal)"
+      >
+        <img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" />
+        <div class="meal-info">
+          <h5>{{ recipe.strMeal }}</h5>
+        </div>
+      </div>
+      }
+    </div>
+
+    } @if(!flagSearch && categoryFlag) {
+    <div id="meals" class="meals">
+      @for(recipe of categoryRecipes; track recipe.idMeal; let i=$index) {
+      <div
+        class="meal"
+        [attr.data-index]="recipe.idMeal"
+        (click)="getMealById(recipe.idMeal)"
+      >
+        <img [src]="recipe.strMealThumb" alt="{{ recipe.strMeal }}" />
+        <div class="meal-info">
+          <h5>{{ recipe.strMeal }}</h5>
+        </div>
+      </div>
+      }
     </div>
     }
   </div>
 
-  } @if(randomRecipe !== null && flagSearch === false) {
+  @if(randomFlag && randomRecipe) {
   <app-discover-recipe [recipe]="randomRecipe"></app-discover-recipe>
-  } @if(recipeById !== null && flagSearch == true) {
+  } @else if(recipeById !== null && flagSearch == true) {
+  <app-discover-recipe [recipe]="recipeById"></app-discover-recipe>
+  } @else if(recipeById !== null && categoryFlag == true) {
   <app-discover-recipe [recipe]="recipeById"></app-discover-recipe>
   }
 </div>

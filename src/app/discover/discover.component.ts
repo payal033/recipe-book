@@ -1,10 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import {
-  faMagnifyingGlass,
-  faShuffle,
-} from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { DiscoverService } from './discover.service';
 import { CommonModule } from '@angular/common';
 import { DiscoverRecipeComponent } from './discover-recipe/discover-recipe.component';
@@ -22,34 +19,73 @@ import { DiscoverRecipeComponent } from './discover-recipe/discover-recipe.compo
 })
 export class DiscoverComponent implements OnInit {
   faMagnifyingGlass = faMagnifyingGlass;
-  faShuffle = faShuffle;
+  private discoverService = inject(DiscoverService);
+
+  categories = this.discoverService.categories;
+  recipeList: any;
 
   searchTerm!: string;
   searchedRecipes: any;
-  randomRecipe: any;
   flagSearch!: boolean;
+
+  randomRecipe: any;
+  randomFlag = false;
+
+  categorySelected!: string;
+  categoryRecipes: any;
+  categoryFlag = false;
+
   recipeById: any;
 
-  private discoverService = inject(DiscoverService);
-
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.onCategorySelected('Vegetarian');
+  }
 
   onSearch(form: NgForm) {
+    this.randomFlag = false;
+    this.categoryFlag = false;
     this.flagSearch = true;
+    this.categorySelected = '';
     const search = form.form.value.search;
-    this.searchTerm = search.trim();
-    if (this.searchTerm) {
+    if (search) {
+      this.searchTerm = search.trim();
       this.discoverService
         .getRecipeByName(this.searchTerm)
         .subscribe((data: any) => {
           this.searchedRecipes = data['meals'];
-          // console.log(this.searchedRecipes);
+          console.log(this.searchedRecipes);
         });
     } else {
       alert('Please enter a search term!');
     }
     form.reset();
     this.recipeById = null;
+  }
+
+  onCategorySelected(category: string) {
+    console.log('Selected category ' + category);
+    this.categoryFlag = true;
+    this.searchTerm = category;
+    this.randomFlag = false;
+    this.flagSearch = false;
+
+    this.categorySelected = category;
+    this.discoverService
+      .getRecipeByCategory(category)
+      .subscribe((data: any) => {
+        this.categoryRecipes = data['meals'];
+      });
+    this.recipeById = null;
+  }
+
+  findRandom() {
+    this.flagSearch = false;
+    this.categoryFlag = false;
+    this.randomFlag = true;
+    this.searchTerm = '';
+    this.discoverService.getRandomRecipe().subscribe((data: any) => {
+      this.randomRecipe = this.singleRecipeData(data);
+    });
   }
 
   singleRecipeData(data: any) {
@@ -69,19 +105,17 @@ export class DiscoverComponent implements OnInit {
     let recipe = {
       mealName: meal['strMeal'],
       category: meal['strCategory'],
+      area: meal['strArea'],
       mealImage: meal['strMealThumb'],
       instructions: meal['strInstructions'],
       ingredients: ingredients,
+      youtubeUrl: meal['strYoutube'],
     };
 
-    return recipe;
-  }
+    console.log(recipe);
+    this.categorySelected = recipe.category;
 
-  findRandom() {
-    this.flagSearch = false;
-    this.discoverService.getRandomRecipe().subscribe((data: any) => {
-      this.randomRecipe = this.singleRecipeData(data);
-    });
+    return recipe;
   }
 
   getMealById(mealId: string) {

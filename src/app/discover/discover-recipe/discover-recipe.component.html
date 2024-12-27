@@ -3,6 +3,7 @@
   <img [src]="recipe.mealImage" alt="{{ recipe.mealName }}" />
   <div class="single-meal-info">
     <p>{{ recipe.category ? recipe.category : "" }}</p>
+    <p>{{ recipe.area ? recipe.area : "" }}</p>
   </div>
   <div class="main">
     <p>{{ recipe.instructions }}</p>
@@ -16,5 +17,11 @@
       </li>
       }
     </ul>
+    @if(recipe.youtubeUrl) {
+    <h5>Youtube Link</h5>
+    <a [href]="recipe.youtubeUrl" target="_blank">
+      {{ recipe.youtubeUrl }}
+    </a>
+    }
   </div>
 </div>
