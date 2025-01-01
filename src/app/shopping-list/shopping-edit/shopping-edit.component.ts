@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  afterRender,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
 import { ShoppingListService } from '../shopping-list.service';
 import { Subscription } from 'rxjs';
@@ -17,6 +23,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editItemIndex!: number;
   editItem!: Ingredient;
 
+  isRemoveAll = true;
+
   constructor(private shoppingService: ShoppingListService) {}
 
   ngOnInit(): void {
@@ -30,6 +38,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
           quantity: this.editItem.quantity,
         });
       }
+    );
+
+    this.shoppingService.removeAll.subscribe(
+      (removeAllState) => (this.isRemoveAll = removeAllState)
     );
   }
 
@@ -55,6 +67,15 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   onClear() {
     this.shoppingListForm.reset();
     this.editMode = false;
+  }
+
+  onRemoveAll() {
+    const answer = confirm(
+      'Are you sure you want to delete all the ingredients?'
+    );
+    if (answer) {
+      this.shoppingService.deleteAllIngredients();
+    }
   }
 
   ngOnDestroy(): void {

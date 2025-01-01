@@ -41,6 +41,15 @@
         >
           Clear
         </button>
+
+        <button
+          class="btn btn-danger mx-2 float-end"
+          type="button"
+          (click)="onRemoveAll()"
+          [disabled]="isRemoveAll"
+        >
+          Remove All
+        </button>
       </div>
     </div>
   </form>
