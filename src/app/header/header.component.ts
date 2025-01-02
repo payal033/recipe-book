@@ -1,5 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterModule,
+} from '@angular/router';
 import { DataStorageService } from '../shared/services/data-storage.service';
 
 @Component({
@@ -10,12 +15,31 @@ import { DataStorageService } from '../shared/services/data-storage.service';
 })
 export class HeaderComponent {
   private dataStorageService = inject(DataStorageService);
+  private router = inject(Router);
+  currentRoute: string = '';
+
+  ngOnInit() {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+        console.log(event.url);
+      }
+    });
+  }
 
   saveRecipeData() {
     this.dataStorageService.saveRecipeData();
   }
 
+  saveSLData() {
+    this.dataStorageService.saveShoppingList();
+  }
+
   fetchRecipeData() {
     this.dataStorageService.fetchRecipeData();
+  }
+
+  fetchSLData() {
+    this.dataStorageService.fetchShoppingList();
   }
 }

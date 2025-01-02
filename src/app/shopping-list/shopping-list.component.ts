@@ -5,6 +5,7 @@ import { ShoppingListService } from './shopping-list.service';
 import { Subscription } from 'rxjs';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { DataStorageService } from '../shared/services/data-storage.service';
 
 @Component({
   selector: 'app-shopping-list',

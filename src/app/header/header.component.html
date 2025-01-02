@@ -22,25 +22,38 @@
           >
         </li>
       </ul>
+      @if(currentRoute !== '/discover') {
       <ul class="navbar-nav">
         <li class="nav-item dropdown ml-auto">
-          <a class="nav-link" (click)="saveRecipeData()">Save Recipes</a>
+          <a
+            class="nav-link"
+            (click)="
+              currentRoute.startsWith('/recipes')
+                ? saveRecipeData()
+                : saveSLData()
+            "
+            >Save
+            {{
+              currentRoute.startsWith("/recipes") ? "Recipes" : "Ingredients"
+            }}</a
+          >
         </li>
         <li>
-          <a class="nav-link" (click)="fetchRecipeData()">Fetch Recipes</a>
-        </li>
-
-        <!-- <a
-            class="nav-link dropdown-toggle"
-            data-toggle="dropdown"
-            role="button"
-            >Manage</a
+          <a
+            class="nav-link"
+            (click)="
+              currentRoute.startsWith('/recipes')
+                ? fetchRecipeData()
+                : fetchSLData()
+            "
+            >Fetch
+            {{
+              currentRoute.startsWith("/recipes") ? "Recipes" : "Ingredients"
+            }}</a
           >
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item">Save Data</a></li>
-            <li><a class="dropdown-item">Fetch Data</a></li>
-          </ul> -->
+        </li>
       </ul>
+      }
     </div>
   </div>
 </nav>

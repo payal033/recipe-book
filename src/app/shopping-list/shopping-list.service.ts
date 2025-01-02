@@ -26,10 +26,17 @@ export class ShoppingListService {
     return [...this.ingredients];
   }
 
+  setIngredients(ingredients: Ingredient[]) {
+    this.ingredients = ingredients;
+    this.ingredientsChanged.next([...this.ingredients]);
+  }
+
   addIngredientsFromRecipes(recipeIngredients: Ingredient[]) {
     this.ingredients.push(...recipeIngredients);
     this.ingredientsChanged.next([...this.ingredients]);
     this.updateRemoveAllState();
+
+    return this.getIngredients();
   }
 
   updateIngredient(index: number, newIngredient: Ingredient) {
