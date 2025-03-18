@@ -19,10 +19,10 @@ export class HeaderComponent {
   currentRoute: string = '';
 
   ngOnInit() {
+    this.currentRoute = this.router.url;
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        this.currentRoute = event.url;
-        console.log(event.url);
+        this.currentRoute = this.router.url;
       }
     });
   }
